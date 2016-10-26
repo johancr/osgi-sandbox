@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>rest</artifactId>
+    <artifactId>web</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>
@@ -14,7 +14,6 @@
     </parent>
 
     <dependencies>
-
         <dependency>
             <groupId>se.cronsioe.johan</groupId>
             <artifactId>api</artifactId>
@@ -22,13 +21,22 @@
 
         <dependency>
             <groupId>se.cronsioe.johan</groupId>
-            <artifactId>spi</artifactId>
+            <artifactId>rest</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <scope>provided</scope>
+            <groupId>se.cronsioe.johan</groupId>
+            <artifactId>vaadin-osgi-bridge</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.http.servlet-api</artifactId>
         </dependency>
 
         <dependency>
@@ -37,15 +45,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.eclipsesource.jaxrs</groupId>
-            <artifactId>publisher</artifactId>
-            <version>5.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.eclipsesource.jaxrs</groupId>
-            <artifactId>provider-gson</artifactId>
-            <version>2.3</version>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.http.jetty</artifactId>
         </dependency>
 
         <dependency>
@@ -55,25 +56,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.http.servlet-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.http.jetty</artifactId>
-       </dependency>
-
-        <dependency>
             <groupId>org.apache.aries.spifly</groupId>
             <artifactId>org.apache.aries.spifly.dynamic.bundle</artifactId>
             <version>1.0.8</version>
-        </dependency>
-
-        <dependency>
-            <groupId>se.cronsioe.johan</groupId>
-            <artifactId>osgi-runner-maven-plugin</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -87,6 +72,13 @@
             <artifactId>console</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>se.cronsioe.johan</groupId>
+            <artifactId>osgi-runner-maven-plugin</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -98,17 +90,17 @@
                     <archive>
                         <manifestEntries>
                             <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
-                            <Bundle-SymbolicName>se.cronsioe.johan.rest</Bundle-SymbolicName>
-                            <Bundle-Name>rest</Bundle-Name>
+                            <Bundle-SymbolicName>se.cronsioe.johan.web</Bundle-SymbolicName>
+                            <Bundle-Name>web</Bundle-Name>
                             <Bundle-Version>1.0.0</Bundle-Version>
-                            <Bundle-Activator>se.cronsioe.johan.rest.osgi.Activator</Bundle-Activator>
-                            <Import-Package>
-                                se.cronsioe.johan.api;version="[1.0.0, 2.0.0)",
-                                se.cronsioe.johan.spi;version="[1.0.0, 2.0.0)",
-                                org.osgi.framework,
-                                javax.ws.rs,javax.ws.rs.core
+                            <Bundle-Activator>se.cronsioe.johan.web.osgi.Activator</Bundle-Activator>
+                            <Import-Package>se.cronsioe.johan.api;version="[1.0.0,2.0.0)",
+                                se.cronsioe.johan.rest;version="[1.0.0,2.0.0)",
+                                org.osgi.framework,org.osgi.util.tracker,javax.servlet,javax.servlet.http,
+                                javax.ws.rs.client,com.vaadin,com.vaadin.ui,com.vaadin.terminal.gwt.server,
+                                com.vaadin.data,com.vaadin.data.util,se.cronsioe.johan.vaadin.osgi.bridge.spi,
+                                com.vaadin.data.validator,org.osgi.service.http
                             </Import-Package>
-                            <Export-Package>se.cronsioe.johan.rest;version=1.0.0</Export-Package>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -139,5 +131,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>
